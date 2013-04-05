@@ -898,6 +898,20 @@ class FlxUI extends FlxGroupX, implements IEventGetter
 		var sg:FlxScrollGroup = new FlxScrollGroup(back, data, this);
 		sg.str_id = id;
 
+		if (the_data.hasNode.scroll)
+		{
+			for (scroll in the_data.nodes.scroll)
+			{
+				var scroll_id:String = U.xml_str(scroll.x, "id", true);
+				switch (scroll_id)
+				{
+					case "vertical": sg.verticalScrollEnabled = U.xml_bool(the_data.x, "vertical", true);
+					case "horizontal": sg.horizontalScrollEnabled = U.xml_bool(the_data.x, "horizontal", true);
+					default:
+				}
+			}
+		}
+		
 		return sg;
 	}
 	

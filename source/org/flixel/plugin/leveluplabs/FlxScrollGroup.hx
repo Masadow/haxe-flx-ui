@@ -8,9 +8,8 @@ import org.flixel.FlxSprite;
  */
 class FlxScrollGroup extends FlxUI, implements IEventGetter
 {
-	public var horizontalScrollEnabled : Bool;
-	public var verticalScrollEnabled : Bool;
-	public var border : FlxBorder;
+	public var horizontalScrollEnabled : Bool = true;
+	public var verticalScrollEnabled : Bool = true;
 	private var _back:FlxSprite;
 
 	public function new(back:FlxSprite,data:Fast=null,superIndex_:FlxUI=null) 

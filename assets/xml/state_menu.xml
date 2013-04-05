@@ -97,10 +97,8 @@
 	</definition>
 	
 	<definition id="scrollpane" back_def="chrome_flat">
-	<!--
 		<scroll id="vertical" enabled="true" />
 		<scroll id="horizontal" enabled="true" />
-	-->
 	</definition>
 
 	<!--STUFF-->
