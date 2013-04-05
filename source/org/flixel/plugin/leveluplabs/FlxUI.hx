@@ -481,6 +481,7 @@ class FlxUI extends FlxGroupX, implements IEventGetter
 			case "tab_menu": return _loadTabMenu(data, definition);
 			case "checkbox": return _loadCheckBox(data, definition);
 			case "radio_group": return _loadRadioGroup(data, definition);
+			case "scroll_group": return _loadScrollGroup(data, definition);
 			default: 
 				//If I don't know how to load this thing, I will request it from my pointer:			
 				var dataObject = { data:data, definition:definition };
@@ -879,6 +880,25 @@ class FlxUI extends FlxGroupX, implements IEventGetter
 		}
 		
 		return f9s;
+	}
+
+	private function _loadScrollGroup(data:Fast, definition:Fast = null):FlxScrollGroup {
+		var the_data:Fast = data;
+		if (definition != null) { the_data = definition; }
+
+		var back_def_str:String = U.xml_str(the_data.x, "back_def");
+		var back_def:Fast = getDefinition(back_def_str);
+		if (back_def == null) {
+			back_def = the_data;
+		}
+		
+		var back:Flx9SliceSprite = _load9SliceSprite(data, back_def);
+		
+		var id:String = U.xml_str(data.x, "id", true);
+		var sg:FlxScrollGroup = new FlxScrollGroup(back, data, this);
+		sg.str_id = id;
+
+		return sg;
 	}
 	
 	private function _loadSprite(data:Fast,definition:Fast=null):FlxSpriteX{

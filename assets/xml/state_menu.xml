@@ -95,6 +95,13 @@
 		<graphic id="hilight" visible="false"/>
 		<graphic id="normal" visible="false"/>
 	</definition>
+	
+	<definition id="scrollpane" back_def="chrome_flat">
+	<!--
+		<scroll id="vertical" enabled="true" />
+		<scroll id="horizontal" enabled="true" />
+	-->
+	</definition>
 
 	<!--STUFF-->
 	
@@ -129,6 +136,17 @@
 	<button_toggle x="300" y="200" use_def="button_toggle" label="Toggle"/>
 	<button_toggle x="300" y="230" use_def="button_toggle" label="Toggle"/>
 	<button_toggle x="300" y="260" use_def="button_toggle" label="Toggle"/>
+	
+	<scroll_group x="300" y="300" width="180" height="120" use_def="scrollpane">
+		<radio_group x="10" y="10" use_def="radio_1">
+			<param type="string" value="dr_seuss2"/>		
+	
+			<radio id="1_fish" label="One Fish"/>
+			<radio id="2_fish" label="Two Fish"/>
+			<radio id="0xff0000_fish" label="Red Fish"/>
+			<radio id="0x0000ff_fish" label="Blue Fish"/>
+		</radio_group>
+	</scroll_group>
 	
 	<tab_menu x="500" y="182" use_def="tab_menu_1" width="200" height="200">
 		<tab id="tab_1" label="Tab 1"/>
