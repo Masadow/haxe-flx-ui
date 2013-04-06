@@ -147,22 +147,6 @@
 			<radio id="0xff0000_fish" label="Red Fish"/>
 			<radio id="0x0000ff_fish" label="Blue Fish"/>
 		</radio_group>
-		<radio_group x="10" y="10" use_def="radio_1">
-			<param type="string" value="dr_seuss2"/>		
-	
-			<radio id="1_fish" label="One Fish"/>
-			<radio id="2_fish" label="Two Fish"/>
-			<radio id="0xff0000_fish" label="Red Fish"/>
-			<radio id="0x0000ff_fish" label="Blue Fish"/>
-		</radio_group>
-		<radio_group x="10" y="10" use_def="radio_1">
-			<param type="string" value="dr_seuss2"/>		
-	
-			<radio id="1_fish" label="One Fish"/>
-			<radio id="2_fish" label="Two Fish"/>
-			<radio id="0xff0000_fish" label="Red Fish"/>
-			<radio id="0x0000ff_fish" label="Blue Fish"/>
-		</radio_group>
 	</scroll_group>
 	
 	<tab_menu x="500" y="182" use_def="tab_menu_1" width="200" height="200">

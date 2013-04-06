@@ -30,6 +30,8 @@ class FlxScrollBar implements IDestroyable
 	private var active:Flx9SliceSprite;
 	
 	private var state:ScrollState;
+	
+	private var lastMouse:FlxPoint;
 
 	public function new(align:ScrollAlign, scrollgroup:FlxScrollGroup, x:Float, y:Float, graphic:Dynamic, hgraphic:Dynamic, pgraphic:Dynamic, rc:Rectangle)
 	{
@@ -48,6 +50,10 @@ class FlxScrollBar implements IDestroyable
 		this.scrollgroup.add(normal);
 		this.scrollgroup.add(hilight);
 		this.scrollgroup.add(pressed);
+
+		
+		lastMouse = new FlxPoint();
+		FlxG.mouse.copyTo(lastMouse);
 	}
 	
 	/*
@@ -96,13 +102,37 @@ class FlxScrollBar implements IDestroyable
 		if (tmpstate != state)
 		{
 			active.visible = false;
+			//Make sure positions are up to date
+			normal.x = active.x;
+			normal.y = active.y;
+			hilight.x = active.x;
+			hilight.y = active.y;
 			switch (state)
 			{
 				case Normal: active = normal; active.visible = true;
 				case Hilight: active = hilight; active.visible = true;
-				case Pressed: active = pressed; active.visible = true;
+				case Pressed: active = pressed; active.visible = true;					
 			}
 		}
+
+		/*
+		 * Move component
+		 */
+		if (state == Pressed)
+		{
+			var offset:Float = align == Vertical ? lastMouse.y - mouse.y : lastMouse.x - mouse.x;
+			if (offset != 0 && align == Vertical)
+				active.y -= offset;
+			else if (offset != 0 && align == Horizontal)
+				active.x -= offset;
+			//Out of box => Replace component
+			if (active.y < scrollgroup.y) active.y = scrollgroup.y;
+			if (active.x < scrollgroup.x) active.x = scrollgroup.x;
+			if (active.x > scrollgroup.x + scrollgroup.contentRect.x - active.width) active.x = scrollgroup.x + scrollgroup.contentRect.x - active.width;
+			if (active.y > scrollgroup.y + scrollgroup.contentRect.y - active.height) active.y = scrollgroup.y + scrollgroup.contentRect.y - active.height;
+		}
+
+		lastMouse.copyFrom(mouse);
 	}
 
 }
@@ -120,6 +150,8 @@ class FlxScrollGroup extends FlxUI, implements IEventGetter
 
 	private var verticalBar:FlxScrollBar;
 	private var horizontalBar:FlxScrollBar;
+	
+	public var sb_thickness:Int = 15;
 		
 	public function new(graphics:Dynamic,contentRect:Rectangle,back:FlxSprite,data:Fast=null,superIndex_:FlxUI=null)
 	{
@@ -130,15 +162,20 @@ class FlxScrollGroup extends FlxUI, implements IEventGetter
 		members.unshift(members.pop());
 		
 		this.contentRect = contentRect;
-
+		
+		//width and height are changed ? Save into contentRect as x & y
+		this.contentRect.x = width;
+		this.contentRect.y = height;
+		
 		if (graphics.normal != "" && graphics.hilight != "")
 		{
-			verticalBar = new FlxScrollBar(Vertical, this, width - 20, 0, graphics.normal, graphics.hilight, graphics.pressed, new Rectangle(0, 0, 20, (height * height) / contentRect.height));
+			verticalBar = new FlxScrollBar(Vertical, this, width - sb_thickness, 0, graphics.normal, graphics.hilight, graphics.pressed, new Rectangle(0, 0, sb_thickness, (height * height) / contentRect.height));
 		}
 		if (graphics.normal != "" && graphics.hilight != "")
 		{
-			horizontalBar = new FlxScrollBar(Horizontal, this, 0, height - 20, graphics.normal, graphics.hilight, graphics.pressed, new Rectangle(0, 0, (width * width) / contentRect.width, 20));
+			horizontalBar = new FlxScrollBar(Horizontal, this, 0, height - sb_thickness, graphics.normal, graphics.hilight, graphics.pressed, new Rectangle(0, 0, (width * width) / contentRect.width, sb_thickness));
 		}
+		
 		
 	}
 
@@ -160,16 +197,6 @@ class FlxScrollGroup extends FlxUI, implements IEventGetter
 		verticalBar.destroy();
 		horizontalBar.destroy();
 		contentRect = null;
-	}
-	
-	public function onScrollBarMouseEnter()
-	{
-		trace("mouse_on");
-	}
-
-	public function onScrollBarMouseLeave()
-	{
-		trace("mouse off");
 	}
 
 }
