@@ -870,7 +870,7 @@ class FlxUI extends FlxGroupX, implements IEventGetter
 		var slice9:String = U.xml_str(the_data.x, "slice9");
 		var tile:Bool = U.xml_bool(the_data.x, "tile", false);
 		var smooth:Bool = U.xml_bool(the_data.x, "smooth", false);
-		
+
 		if (src != "") {
 			if(slice9 != ""){
 				f9s = new Flx9SliceSprite(0, 0, src, rc, slice9, tile, smooth);
@@ -893,9 +893,29 @@ class FlxUI extends FlxGroupX, implements IEventGetter
 		}
 		
 		var back:Flx9SliceSprite = _load9SliceSprite(data, back_def);
-		
+
+		var content_rect:Rectangle = new Rectangle(0, 0, U.xml_i(data.x, "content_width"), U.xml_i(data.x, "content_height"));
+
+		var graphicsSrc:Dynamic = cast {};
+		graphicsSrc.normal = "";
+		graphicsSrc.hilight = "";
+		graphicsSrc.pressed = "";
+		if (the_data.hasNode.graphic)
+		{
+			for (graphic in the_data.nodes.graphic)
+			{
+				var graphicStr:String = U.xml_str(graphic.x, "id", true);
+				switch (graphicStr)
+				{
+					case "normal": graphicsSrc.normal = U.xml_gfx(graphic.x, "src", true);
+					case "hilight": graphicsSrc.hilight = U.xml_gfx(graphic.x, "src", true);
+					case "pressed": graphicsSrc.pressed = U.xml_gfx(graphic.x, "src", true);
+					default:
+				}
+			}
+		}		
 		var id:String = U.xml_str(data.x, "id", true);
-		var sg:FlxScrollGroup = new FlxScrollGroup(back, data, this);
+		var sg:FlxScrollGroup = new FlxScrollGroup(graphicsSrc, content_rect, back, data, this);
 		sg.str_id = id;
 
 		if (the_data.hasNode.scroll)

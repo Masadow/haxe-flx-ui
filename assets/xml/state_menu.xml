@@ -99,6 +99,9 @@
 	<definition id="scrollpane" back_def="chrome_flat">
 		<scroll id="vertical" enabled="true" />
 		<scroll id="horizontal" enabled="true" />
+		<graphic id="normal" src="ui/buttons/blue" />
+		<graphic id="hilight" src="ui/buttons/blue_back_over" />
+		<graphic id="pressed" src="ui/buttons/blue_back" />
 	</definition>
 
 	<!--STUFF-->
@@ -135,7 +138,23 @@
 	<button_toggle x="300" y="230" use_def="button_toggle" label="Toggle"/>
 	<button_toggle x="300" y="260" use_def="button_toggle" label="Toggle"/>
 	
-	<scroll_group x="300" y="300" width="180" height="120" use_def="scrollpane">
+	<scroll_group x="300" y="300" width="180" height="120" content_width="500" content_height="360" use_def="scrollpane">
+		<radio_group x="10" y="10" use_def="radio_1">
+			<param type="string" value="dr_seuss2"/>		
+	
+			<radio id="1_fish" label="One Fish"/>
+			<radio id="2_fish" label="Two Fish"/>
+			<radio id="0xff0000_fish" label="Red Fish"/>
+			<radio id="0x0000ff_fish" label="Blue Fish"/>
+		</radio_group>
+		<radio_group x="10" y="10" use_def="radio_1">
+			<param type="string" value="dr_seuss2"/>		
+	
+			<radio id="1_fish" label="One Fish"/>
+			<radio id="2_fish" label="Two Fish"/>
+			<radio id="0xff0000_fish" label="Red Fish"/>
+			<radio id="0x0000ff_fish" label="Blue Fish"/>
+		</radio_group>
 		<radio_group x="10" y="10" use_def="radio_1">
 			<param type="string" value="dr_seuss2"/>		
 	
